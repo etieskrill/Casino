@@ -10,6 +10,8 @@ public class Game {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN_ITALIC = "\033[0;32;3m";
 
+    public static final int DEFAULT_STAKE = 10;
+
     private final String name;
     private final int numMinPlayers;
     private final int numMaxPlayers;
@@ -25,6 +27,11 @@ public class Game {
         this.name = name;
         this.numMinPlayers = numMinPlayers;
         this.numMaxPlayers = numMaxPlayers;
+    }
+
+    public int requestStake(Person player) {
+        //TODO ask player for stake
+        return DEFAULT_STAKE;
     }
 
     public boolean play() {

@@ -16,6 +16,22 @@ public class Casino {
         Casino casino = new Casino();
     }
 
+    private void comparison() {
+        Person wanda = new Person("Maximoff", "Wanda", 1989);
+        Person clint = new Person("Barton", "Clint", 1975);
+        Person pietro = new Person("Maximoff", "Pietro", 1989);
+
+        Person[] people = {wanda, clint, pietro};
+
+        for (int i = 0; i < people.length - 1; i++) {
+            for (int j = i + 1; j < people.length; j++) {
+                Person p1 = people[i], p2 = people[j];
+                System.out.println(p1.toString() + " and " + p2.toString() + " are" +
+                        (p1.equals(p2) ? " " : " not ") + "the same person.");
+            }
+        }
+    }
+
     private void demo() {
         System.out.println("Juhui, wir haben folgende Personen erstellt: ");
 
@@ -31,7 +47,8 @@ public class Casino {
         }
 
         Game numberGuessing = new Game("Zufallszahl", 1, 1);
-        DealTable table = new DealTable(numberGuessing, rita, moritz);
+        DealTable table = new DealTable(numberGuessing, rita);
+        table.addPlayers(moritz, elvis);
 
         System.out.println("\n\nEinfache Casino-Simulation");
         System.out.println(table);

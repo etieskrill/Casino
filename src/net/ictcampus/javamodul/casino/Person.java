@@ -1,5 +1,7 @@
 package net.ictcampus.javamodul.casino;
 
+import java.util.Objects;
+
 public class Person {
 
     public static final int STARTING_CREDIT = 50;
@@ -63,6 +65,18 @@ public class Person {
     @Override
     public String toString() {
         return firstName + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (birthYear != person.birthYear) return false;
+        if (!lastName.equals(person.lastName)) return false;
+        return firstName.equals(person.firstName);
     }
 
 }
