@@ -1,6 +1,7 @@
 package net.ictcampus.javamodul.casino.game;
 
 import net.ictcampus.javamodul.casino.person.Player;
+import net.ictcampus.javamodul.lang.OutOfRangeException;
 
 import java.util.Locale;
 
@@ -51,9 +52,7 @@ public class LuckySeven extends Game {
                 guess = Integer.parseInt(str);
 
                 if (guess > 12 || guess < 2) {
-                    System.out.println(ANSI_GREEN_ITALIC + "Your guess was outside of the range." +
-                            ANSI_RESET);
-                    continue;
+                    throw new OutOfRangeException("Guess was out of range");
                 }
 
                 int sum = die1 + die2;
@@ -89,6 +88,9 @@ public class LuckySeven extends Game {
                 return false;
             } catch (NumberFormatException ex) {
                 System.out.println(ANSI_GREEN_ITALIC + "Please enter a valid guess." + ANSI_RESET);
+            } catch (OutOfRangeException ex) {
+                System.out.println(ex.getMessage());
+                //System.out.println(ANSI_GREEN_ITALIC + "Your guess was outside of the range." + ANSI_RESET);
             }
         }
     }

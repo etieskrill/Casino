@@ -1,6 +1,7 @@
 package net.ictcampus.javamodul.casino.game;
 
 import net.ictcampus.javamodul.casino.person.Player;
+import net.ictcampus.javamodul.lang.OutOfRangeException;
 
 import java.util.Locale;
 import java.util.Random;
