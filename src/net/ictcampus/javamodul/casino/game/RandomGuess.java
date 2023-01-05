@@ -1,6 +1,7 @@
 package net.ictcampus.javamodul.casino.game;
 
 import net.ictcampus.javamodul.casino.person.Player;
+import net.ictcampus.javamodul.lang.OutOfRangeException;
 
 import java.util.Locale;
 
@@ -53,8 +54,7 @@ public class RandomGuess extends Game {
                 guess = Integer.parseInt(str);
 
                 if (guess > 100 || guess < 1) {
-                    System.out.println(ANSI_GREEN_ITALIC + "Your guess was outside of the range." +
-                            ANSI_RESET);
+                    throw new OutOfRangeException("Guess was out of range");
                 }
                 if (guess == r) {
                     System.out.println(ANSI_GREEN_ITALIC + "You have won. Our number was " + r + ".");
@@ -69,6 +69,9 @@ public class RandomGuess extends Game {
                 guesses++;
             } catch (NumberFormatException ex) {
                 System.out.println(ANSI_GREEN_ITALIC + "Please enter a valid guess." + ANSI_RESET);
+            } catch (OutOfRangeException ex) {
+                System.out.println(ex.getMessage());
+                //System.out.println(ANSI_GREEN_ITALIC + "Your guess was outside of the range." + ANSI_RESET);
             }
 
             str = scanner.next();
