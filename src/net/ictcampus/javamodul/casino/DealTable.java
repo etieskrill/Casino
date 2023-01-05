@@ -47,7 +47,9 @@ public class DealTable {
         }
 
         //Split rewards are rounded down
+        if (hasWon.size() < 1) return;
         int creditsPerPlayer = pot / hasWon.size();
+        System.out.println(creditsPerPlayer + " " + pot);
         int rest = pot % creditsPerPlayer; //TODO rest payed back to casino or smthn idk
         for (Player player : hasWon) {
             player.earnMoney(creditsPerPlayer);

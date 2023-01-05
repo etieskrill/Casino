@@ -42,23 +42,25 @@ public class LuckySeven extends Game {
         }
 
         System.out.println(ANSI_GREEN_ITALIC + "\nPlease enter your guess: " + ANSI_RESET);
-        str = scanner.next();
-        int guess;
 
         while(true) {
+            str = scanner.next();
+            int guess;
+
             try {
                 guess = Integer.parseInt(str);
 
                 if (guess > 12 || guess < 2) {
                     System.out.println(ANSI_GREEN_ITALIC + "Your guess was outside of the range." +
                             ANSI_RESET);
+                    continue;
                 }
 
                 int sum = die1 + die2;
 
                 switch (guess) {
                     case 7 -> {
-                        if (sum != 7) return false;
+                        if (sum != 7) break;
                         System.out.println(ANSI_GREEN_ITALIC + "You have won. The sum was indeed 7.");
                         potMult = 3;
                         return true;
@@ -83,6 +85,7 @@ public class LuckySeven extends Game {
                     }
                 }
 
+                System.out.println(ANSI_GREEN_ITALIC + "You have lost. The sum was " + sum + ".");
                 return false;
             } catch (NumberFormatException ex) {
                 System.out.println(ANSI_GREEN_ITALIC + "Please enter a valid guess." + ANSI_RESET);
