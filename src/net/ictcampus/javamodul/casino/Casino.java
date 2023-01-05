@@ -8,7 +8,15 @@ public class Casino {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN_ITALIC = "\033[0;32;3m";
 
+    public Casino() {
+        demo();
+    }
+
     public static void main(String[] args) {
+        Casino casino = new Casino();
+    }
+
+    private void demo() {
         System.out.println("Juhui, wir haben folgende Personen erstellt: ");
 
         Person moritz = new Person("Meier", "Moritz", 2000);

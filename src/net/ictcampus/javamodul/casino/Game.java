@@ -17,6 +17,10 @@ public class Game {
     private final Random random = new Random();
     private final Scanner scanner = new Scanner(System.in);
 
+    public Game(String name) {
+        this(name, 1, 10);
+    }
+
     public Game(String name, int numMinPlayers, int numMaxPlayers) {
         this.name = name;
         this.numMinPlayers = numMinPlayers;
