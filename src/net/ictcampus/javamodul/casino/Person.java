@@ -2,7 +2,7 @@ package net.ictcampus.javamodul.casino;
 
 public class Person {
 
-    public static final int STARTING_CREDIT = 100;
+    public static final int STARTING_CREDIT = 50;
 
     private String lastName;
     private String firstName;

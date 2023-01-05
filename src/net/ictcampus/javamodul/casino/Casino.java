@@ -1,6 +1,12 @@
 package net.ictcampus.javamodul.casino;
 
+import java.util.Locale;
+import java.util.Scanner;
+
 public class Casino {
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN_ITALIC = "\033[0;32;3m";
 
     public static void main(String[] args) {
         System.out.println("Juhui, wir haben folgende Personen erstellt: ");
@@ -21,6 +27,17 @@ public class Casino {
 
         System.out.println("\n\nEinfache Casino-Simulation");
         System.out.println(table);
+
+        String str;
+        do {
+            table.play();
+            System.out.println(ANSI_GREEN_ITALIC + "Your current credit amounts to " + moritz.getCredit() + " doublons." +
+                    "\nWould you like to play another game of " + table.getActivity().toString() + "?" + ANSI_RESET);
+            Scanner scanner = new Scanner(System.in);
+            do {
+                str = scanner.next().toLowerCase(Locale.ROOT);
+            } while (!(str.equals("yes") || str.equals("no")));
+        } while (str.equals("yes"));
     }
 
 }
