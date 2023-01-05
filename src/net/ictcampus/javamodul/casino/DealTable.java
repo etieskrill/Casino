@@ -1,21 +1,27 @@
 package net.ictcampus.javamodul.casino;
 
+import net.ictcampus.javamodul.casino.game.Game;
+import net.ictcampus.javamodul.casino.person.Employee;
+import net.ictcampus.javamodul.casino.person.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class DealTable {
 
     private final Game activity;
-    private Person croupier;
-    private ArrayList<Person> players;
+    private Employee croupier;
+    private ArrayList<Player> players;
     private int pot;
 
-    public DealTable(Game activity, Person croupier) {
-        this(activity, croupier, (Person) null); //FIXME what even is this
+    public DealTable(Game activity, Employee croupier) {
+        this.activity = activity;
+        this.croupier = croupier;
+        this.players = new ArrayList<>();
     }
 
-    private DealTable(Game activity, Person croupier, Person... players) {
+    @Deprecated
+    private DealTable(Game activity, Employee croupier, Player... players) {
         this.activity = activity;
         this.croupier = croupier;
         if (players == null) {
@@ -24,17 +30,17 @@ public class DealTable {
         }
         if (activity.getNumMinPlayers() > players.length || activity.getNumMaxPlayers() < players.length)
             throw new IllegalArgumentException("Illegal number of players for activity " + activity);
-        this.players = (ArrayList<Person>) Arrays.asList(players);
+        //this.players = (ArrayList<Player>) Arrays.asList(players); //FIXME nani tf
     }
 
     public void play() {
-        ArrayList<Person> hasWon = new ArrayList<>(getNumberOfPlayers());
+        ArrayList<Player> hasWon = new ArrayList<>(getNumberOfPlayers());
 
-        for (Person player : players) {
+        for (Player player : players) {
             addToPot(player.putAtStake(activity.requestStake(player)));
         }
 
-        for (Person player : players) {
+        for (Player player : players) {
             if (activity.play()) {
                 hasWon.add(player);
             }
@@ -43,7 +49,7 @@ public class DealTable {
         //Split rewards are rounded down
         int creditsPerPlayer = pot / hasWon.size();
         int rest = pot % creditsPerPlayer; //TODO rest payed back to casino or smthn idk
-        for (Person player : hasWon) {
+        for (Player player : hasWon) {
             player.earnMoney(creditsPerPlayer);
         }
 
@@ -58,7 +64,7 @@ public class DealTable {
     public String toString() {
         StringBuilder builder = new StringBuilder(
                 "Das Spiel " + activity.toString() + " wird durch den Croupier " + croupier.toString() + " geführt.");
-        for (Person player : players) {
+        for (Player player : players) {
             builder.append("\nEs spielt ").append(player.toString());
         }
 
@@ -81,19 +87,19 @@ public class DealTable {
         return activity;
     }
 
-    public void addPlayer(Person player) {
+    public void addPlayer(Player player) {
         this.players.add(player);
     }
 
-    public void addPlayers(Person... player) {
+    public void addPlayers(Player... player) {
         this.players.addAll(Arrays.asList(player));
     }
 
-    public boolean removePerson(Person person) {
-        return this.players.remove(person);
+    public boolean removePlayer(Player player) {
+        return this.players.remove(player);
     }
 
-    public Person removePerson(int index) {
+    public Player removePlayer(int index) {
         return this.players.remove(index);
     }
 

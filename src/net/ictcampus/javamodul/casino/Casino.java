@@ -1,12 +1,18 @@
 package net.ictcampus.javamodul.casino;
 
+import net.ictcampus.javamodul.casino.game.Game;
+import net.ictcampus.javamodul.casino.game.LuckySeven;
+import net.ictcampus.javamodul.casino.game.RandomGuess;
+import net.ictcampus.javamodul.casino.person.Employee;
+import net.ictcampus.javamodul.casino.person.Person;
+import net.ictcampus.javamodul.casino.person.Player;
+
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Casino {
+import static net.ictcampus.javamodul.util.ANSI.*;
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_GREEN_ITALIC = "\033[0;32;3m";
+public class Casino {
 
     public Casino() {
         demo();
@@ -17,9 +23,9 @@ public class Casino {
     }
 
     private void comparison() {
-        Person wanda = new Person("Maximoff", "Wanda", 1989);
-        Person clint = new Person("Barton", "Clint", 1975);
-        Person pietro = new Person("Maximoff", "Pietro", 1989);
+        Person wanda = new Player("Maximoff", "Wanda", 1989);
+        Person clint = new Player("Barton", "Clint", 1975);
+        Person pietro = new Player("Maximoff", "Pietro", 1989);
 
         Person[] people = {wanda, clint, pietro};
 
@@ -35,9 +41,10 @@ public class Casino {
     private void demo() {
         System.out.println("Juhui, wir haben folgende Personen erstellt: ");
 
-        Person moritz = new Person("Meier", "Moritz", 2000);
-        Person rita = new Person("Bürki", "Rita", 1975); //TODO parse non-ascii characters
-        Person elvis = new Person("Presley", "Elvis", 1935);
+        //ofc these could all be players, but i hate unnecessary typecasting
+        Player moritz = new Player("Meier", "Moritz", 2000);
+        Employee rita = new Employee("Bürki", "Rita", 1975); //TODO parse non-ascii characters
+        Player elvis = new Player("Presley", "Elvis", 1935);
 
         Person[] people = {moritz, rita, elvis};
 
@@ -46,9 +53,9 @@ public class Casino {
             System.out.println(person.getLastName() + " wurde im Jahr " + person.getBirthYear() + " geboren.");
         }
 
-        Game numberGuessing = new Game("Zufallszahl", 1, 1);
+        Game numberGuessing = new RandomGuess("Zufallszahl", 1, 1);
         DealTable table = new DealTable(numberGuessing, rita);
-        table.addPlayers(moritz, elvis);
+        table.addPlayers(moritz);
 
         System.out.println("\n\nEinfache Casino-Simulation");
         System.out.println(table);
@@ -56,8 +63,9 @@ public class Casino {
         String str;
         do {
             table.play();
-            System.out.println(ANSI_GREEN_ITALIC + "Your current credit amounts to " + moritz.getCredit() + " doublons." +
-                    "\nWould you like to play another game of " + table.getActivity().toString() + "?" + ANSI_RESET);
+            System.out.println(ANSI_GREEN_ITALIC + "Your current credit amounts to " + (moritz).getCredit() +
+                    " doublons.\nWould you like to play another game of " + table.getActivity().toString() + "?" +
+                    ANSI_RESET);
             Scanner scanner = new Scanner(System.in);
             do {
                 str = scanner.next().toLowerCase(Locale.ROOT);
