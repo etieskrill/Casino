@@ -6,6 +6,10 @@ import net.ictcampus.javamodul.casino.person.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+
+import static net.ictcampus.javamodul.util.ANSI.ANSI_GREEN_ITALIC;
+import static net.ictcampus.javamodul.util.ANSI.ANSI_RESET;
 
 public class DealTable {
 
@@ -34,25 +38,26 @@ public class DealTable {
     }
 
     public void play() {
-        ArrayList<Player> hasWon = new ArrayList<>(getNumberOfPlayers());
-
         for (Player player : players) {
             addToPot(player.putAtStake(activity.requestStake(player)));
         }
 
         for (Player player : players) {
-            if (activity.play()) {
-                hasWon.add(player);
-            }
-        }
+            System.out.println(ANSI_GREEN_ITALIC + "The pot currently amounts to " + getPot() + ".\n");
+            System.out.println(ANSI_GREEN_ITALIC + "Currently playing: " + player.toString() + "\n");
 
-        //Split rewards are rounded down
-        if (hasWon.size() < 1) return;
-        int creditsPerPlayer = pot / hasWon.size();
-        System.out.println(creditsPerPlayer + " " + pot);
-        int rest = pot % creditsPerPlayer; //TODO rest payed back to casino or smthn idk
-        for (Player player : hasWon) {
-            player.earnMoney(creditsPerPlayer);
+            if (player.getCredit() <= 0) {
+                System.out.println(ANSI_GREEN_ITALIC + player + " ist bankrott.");
+                players.remove(player);
+            }
+
+            if (activity.play()) {
+                player.earnMoney(activity.payWin(50));
+            }
+
+            System.out.println(ANSI_GREEN_ITALIC + "Your current credit amounts to " + player.getCredit() +
+                    " doubloons.\n" + ANSI_RESET);
+
         }
 
         setPot(0);
@@ -93,8 +98,12 @@ public class DealTable {
         this.players.add(player);
     }
 
-    public void addPlayers(Player... player) {
-        this.players.addAll(Arrays.asList(player));
+    public void addPlayers(Player... players) {
+        this.players.addAll(Arrays.asList(players));
+    }
+
+    public void addPlayers(Collection<Player> players) {
+        this.players.addAll(players);
     }
 
     public boolean removePlayer(Player player) {
@@ -103,6 +112,10 @@ public class DealTable {
 
     public Player removePlayer(int index) {
         return this.players.remove(index);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public int getNumberOfPlayers() {

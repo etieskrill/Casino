@@ -3,10 +3,7 @@ package net.ictcampus.javamodul.domain;
 import net.ictcampus.javamodul.casino.person.Person;
 import net.ictcampus.javamodul.casino.person.Player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,23 +36,35 @@ public class PersonJDBCDao implements JDBCDao<Person> {
         return null;
     }
 
+    //So much for over-engineering. If this isn't a thing of beauty, then I don't know what is.
     @Override
-    public Person selectByID(int id) throws SQLException {
+    public <U> Person selectByProperty(String column, U arg) throws SQLException, IllegalArgumentException {
         con = ConnectionFactory.getInstance().getConnection();
-        ps = con.prepareStatement("SELECT ID_Person, prename, name, birthyear, credit FROM PERSON WHERE ID_Person = ?");
-        ps.setInt(1, id);
+        ps = con.prepareStatement("SELECT * FROM PERSON WHERE " + column + " = ?");
+        if (arg instanceof Integer i) ps.setInt(1, i);
+        else if (arg instanceof String str) ps.setString(1, str);
+        else if (arg instanceof Date date) ps.setDate(1, date);
+        else if (arg instanceof Float f) ps.setFloat(1, f);
+        else throw new IllegalArgumentException("Type " + arg.getClass() + " could not be classified");
 
         rs = ps.executeQuery();
         ps.closeOnCompletion();
 
         rs.next(); //Move pointer to first row
+        //TODO separate tables for players and employees
+        //TODO factory methods for players
         return new Player(
                 rs.getInt("ID_Person"),
                 rs.getString("name"),
                 rs.getString("prename"),
-                rs.getInt("birtyear"),
+                rs.getInt("birthyear"),
                 rs.getInt("credit")
         );
+    }
+
+    @Override
+    public Person selectByID(int id) throws SQLException {
+        return selectByProperty("ID_Person", id);
     }
 
     @Override

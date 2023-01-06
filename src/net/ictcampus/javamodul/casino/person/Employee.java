@@ -11,7 +11,11 @@ public class Employee extends Person {
     }
 
     public Employee(String lastName, String firstName, int birthYear, int wage) {
-        super(-1, lastName, firstName, birthYear);
+        this(-1, lastName, firstName, birthYear, wage);
+    }
+
+    public Employee(int id, String lastName, String firstName, int birthYear, int wage) {
+        super(id, lastName, firstName, birthYear);
         this.wage = wage;
     }
 
