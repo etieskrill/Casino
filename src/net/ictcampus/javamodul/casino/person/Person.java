@@ -2,11 +2,13 @@ package net.ictcampus.javamodul.casino.person;
 
 public abstract class Person {
 
+    private final int id;
     private String lastName;
     private String firstName;
     private final int birthYear;
 
-    public Person(String lastName, String firstName, int birthYear) {
+    public Person(int id, String lastName, String firstName, int birthYear) {
+        this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.birthYear = birthYear;
@@ -14,6 +16,10 @@ public abstract class Person {
 
     public void sayName() {
         System.out.println(this);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getLastName() {

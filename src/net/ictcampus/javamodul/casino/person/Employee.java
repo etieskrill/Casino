@@ -11,7 +11,7 @@ public class Employee extends Person {
     }
 
     public Employee(String lastName, String firstName, int birthYear, int wage) {
-        super(lastName, firstName, birthYear);
+        super(-1, lastName, firstName, birthYear);
         this.wage = wage;
     }
 

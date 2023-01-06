@@ -5,7 +5,9 @@ import net.ictcampus.javamodul.casino.game.LuckySeven;
 import net.ictcampus.javamodul.casino.person.Employee;
 import net.ictcampus.javamodul.casino.person.Person;
 import net.ictcampus.javamodul.casino.person.Player;
+import net.ictcampus.javamodul.domain.PersonJDBCDao;
 
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -22,35 +24,18 @@ public class Casino {
         Casino casino = new Casino();
     }
 
-    private void comparison() {
-        Person wanda = new Player("Maximoff", "Wanda", 1989);
-        Person clint = new Player("Barton", "Clint", 1975);
-        Person pietro = new Player("Maximoff", "Pietro", 1989);
-
-        Person[] people = {wanda, clint, pietro};
-
-        for (int i = 0; i < people.length - 1; i++) {
-            for (int j = i + 1; j < people.length; j++) {
-                Person p1 = people[i], p2 = people[j];
-                System.out.println(p1.toString() + " and " + p2.toString() + " are" +
-                        (p1.equals(p2) ? " " : " not ") + "the same person.");
-            }
-        }
-    }
-
     private void demo() {
-        System.out.println("Juhui, wir haben folgende Personen erstellt: ");
+        PersonJDBCDao dao = new PersonJDBCDao();
 
-        //ofc these could all be players, but i hate unnecessary typecasting
-        Player moritz = new Player("Meier", "Moritz", 2000);
-        Employee rita = new Employee("Bürki", "Rita", 1975); //TODO parse non-ascii characters
-        Player elvis = new Player("Presley", "Elvis", 1935);
+        Player p1;
+        Player p2;
 
-        Person[] people = {moritz, rita, elvis};
-
-        for (Person person : people) {
-            person.sayName();
-            System.out.println(person.getLastName() + " wurde im Jahr " + person.getBirthYear() + " geboren.");
+        try {
+            p1 = (Player) dao.selectByID(1);
+            p2 = (Player) dao.selectByID(2);
+        } catch (SQLException ex) {
+            System.err.println("Could not select players from database, using defaults");
+            p1 = new Player("Wanda")
         }
 
         Game numberGuessing = new LuckySeven("Lucky Seven", 1, 1);

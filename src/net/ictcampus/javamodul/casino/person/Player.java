@@ -6,12 +6,12 @@ public class Player extends Person {
 
     private int credit;
 
-    public Player(String lastName, String firstName, int birthYear) {
-        this(lastName, firstName, birthYear, STARTING_CREDIT);
+    public Player(int id, String lastName, String firstName, int birthYear) {
+        this(id, lastName, firstName, birthYear, STARTING_CREDIT);
     }
 
-    public Player(String lastName, String firstName, int birthYear, int credit) {
-        super(lastName, firstName, birthYear);
+    public Player(int id, String lastName, String firstName, int birthYear, int credit) {
+        super(id, lastName, firstName, birthYear);
         this.credit = credit;
     }
 
