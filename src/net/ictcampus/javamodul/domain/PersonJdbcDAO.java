@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonJDBCDao implements JDBCDao<Person> {
+public class PersonJdbcDAO implements JdbcDAO<Person> {
 
     private Connection con;
     private PreparedStatement ps;
@@ -49,7 +49,10 @@ public class PersonJDBCDao implements JDBCDao<Person> {
 
         rs = ps.executeQuery();
         ps.closeOnCompletion();
+        if (rs == null) throw new SQLException("Query was not successful");
 
+        //This method also throws an SQLException if there are no more results ... i think???
+        //That assumption is based on whether a "closed result set" means the set has no more elements
         rs.next(); //Move pointer to first row
         //TODO separate tables for players and employees
         //TODO factory methods for players

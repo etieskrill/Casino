@@ -5,7 +5,7 @@ import net.ictcampus.javamodul.casino.game.LuckySeven;
 import net.ictcampus.javamodul.casino.person.Employee;
 import net.ictcampus.javamodul.casino.person.Person;
 import net.ictcampus.javamodul.casino.person.Player;
-import net.ictcampus.javamodul.domain.PersonJDBCDao;
+import net.ictcampus.javamodul.domain.PersonJdbcDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class Casino {
     }
 
     private void demo() {
-        PersonJDBCDao personDao = new PersonJDBCDao();
+        PersonJdbcDAO personDao = new PersonJdbcDAO();
 
         List<Person> people;
 
